@@ -10,18 +10,17 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
 
+// Router
+const indexRouter = require('./routes/index');
 // テンプレートエンジンの指定
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use('/', indexRouter);
 // server
 const PORT = process.env.PORT_NO || 80;
 app.listen(PORT, () => {
     console.info('listen: ', PORT)
-});
-
-// render
-app.get('/', function (req, res) {
-    res.render('login')
 });
 
 // secretとuserの定義
