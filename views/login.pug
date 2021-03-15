@@ -1,0 +1,10 @@
+doctype html
+html(lang='ja')
+    head
+      meta(charset='utf-8')
+      title login
+    body
+      form(action='/login' method='POST')
+        input(id='' type='text' name='username' placeholder='UserName')
+        input(id='' type='password' name='password' placeholder='password')
+        button(type='submit' value='送信') 送信
