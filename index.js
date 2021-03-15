@@ -11,7 +11,7 @@ const session = require('express-session');
 const path = require('path');
 
 // テンプレートエンジンの指定
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 // server
 const PORT = process.env.PORT_NO || 80;
