@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 
 // secretとuserの定義
 const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
-    USER = bcrypt.hashSync(process.env.DEFAULT_USER, 10);
+    USER = process.env.DEFAULT_USER;
 
 // sessionの設定
 var sess = {
@@ -44,3 +44,27 @@ if (app.get('env') === 'production') {
 app.use(session(sess))
 app.use(passport.initialize())
 app.use(passport.session())
+
+// strategiesの定義
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true
+}, function (req, username, password, done) {
+    process.nextTick(function () {
+        // ユーザー名、パスワードが不正な時
+        if (!username) {
+            return done(null, false, {
+                message: 'User name is incorrect!'
+            });
+        } else if (password !== result[0].password) {
+            return done(null, false, {
+                message: 'Password is incorrect!'
+            });
+        } else {
+            console.log('username: ' + username)
+            return done(null, username)
+        }
+    });
+}));
+
