@@ -24,3 +24,23 @@ app.get('/', function (req, res) {
     res.render('login')
 });
 
+// secretとuserの定義
+const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
+    USER = bcrypt.hashSync(process.env.DEFAULT_USER, 10);
+
+// sessionの設定
+var sess = {
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {}
+}
+if (app.get('env') === 'production') {
+    app.set('trust proxy', 1)
+    sess.cookie.secure = true
+}
+
+// passportの定義
+app.use(session(sess))
+app.use(passport.initialize())
+app.use(passport.session())
