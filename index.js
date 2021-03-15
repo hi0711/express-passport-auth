@@ -12,11 +12,15 @@ const path = require('path');
 
 // Router
 const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+
 // テンプレートエンジンの指定
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+
 // server
 const PORT = process.env.PORT_NO || 80;
 app.listen(PORT, () => {
