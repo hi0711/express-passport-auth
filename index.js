@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 
 // secretとuserの定義
 const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
-    USER = bcrypt.hashSync(process.env.DEFAULT_USER, 10);
+    USER = process.env.DEFAULT_USER;
 
 // sessionの設定
 var sess = {
