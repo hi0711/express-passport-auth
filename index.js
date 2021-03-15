@@ -19,3 +19,8 @@ app.listen(PORT, () => {
     console.info('listen: ', PORT)
 });
 
+// render
+app.get('/', function (req, res) {
+    res.render('index')
+})
+
