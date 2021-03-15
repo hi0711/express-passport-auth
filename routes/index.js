@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // indexのルーティング
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
     res.render('login')
 });
 

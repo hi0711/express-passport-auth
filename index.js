@@ -27,13 +27,9 @@ app.listen(PORT, () => {
     console.info('listen: ', PORT)
 });
 
-// secretとuserの定義
-const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
-    USER = process.env.DEFAULT_USER;
-
 // sessionの設定
 var sess = {
-    secret: SECRET,
+    secret: 'wedding party',
     resave: false,
     saveUninitialized: true,
     cookie: {}
@@ -48,26 +44,29 @@ app.use(session(sess))
 app.use(passport.initialize())
 app.use(passport.session())
 
+// secretの定義
+// const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
+//     SECRET_COMPARE = bcrypt.compareSync(password, SECRET);
+const SECRET = process.env.DEFAULT_SECRET;
+
 // strategiesの定義
-passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    passReqToCallback: true
-}, function (req, username, password, done) {
-    process.nextTick(function () {
-        // ユーザー名、パスワードが不正な時
-        if (!username) {
-            return done(null, false, {
-                message: 'User name is incorrect!'
-            });
-        } else if (password !== result[0].password) {
-            return done(null, false, {
-                message: 'Password is incorrect!'
-            });
-        } else {
-            console.log('username: ' + username)
-            return done(null, username)
-        }
-    });
-}));
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        process.nextTick(function () {
+            // ユーザー名、パスワードが不正な時
+            if (!username) {
+                return done(null, false, {
+                    message: 'User name is incorrect!'
+                });
+            } else if (password !== result[0].password) {
+                return done(null, false, {
+                    message: 'Password is incorrect!'
+                });
+            } else {
+                console.log('username: ' + username)
+                return done(null, username)
+            }
+        });
+    })
+);
 
