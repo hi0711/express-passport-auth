@@ -21,6 +21,6 @@ app.listen(PORT, () => {
 
 // render
 app.get('/', function (req, res) {
-    res.render('index')
-})
+    res.render('login')
+});
 
