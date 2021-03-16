@@ -10,23 +10,23 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
 
-// Router
-const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
-
-// テンプレートエンジンの指定
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
 // logging
 app.use(require('morgan')('combined'));
 
 // express.json
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
+
+// views engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+// Router
+const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+
+app.use('/', indexRouter);
+// app.use('/users', usersRouter);
 
 // server
 const PORT = process.env.PORT_NO || 80;
