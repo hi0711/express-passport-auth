@@ -38,19 +38,6 @@ app.use(session(sess));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Router
-const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
-
-app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-
-// server
-const PORT = process.env.PORT_NO || 80;
-app.listen(PORT, () => {
-    console.info('listen: ', PORT)
-});
-
 // secretの定義
 // const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
 //     SECRET_COMPARE = bcrypt.compareSync(password, SECRET);
@@ -76,3 +63,22 @@ passport.use(new LocalStrategy(
     })
 );
 
+// serialize
+passport.serializeUser(function (user, done) {
+    done(null, user)
+});
+passport.deserializeUser(function (user, done) {
+    done(null, user)
+});
+
+// Router
+const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+
+// server
+const PORT = process.env.PORT_NO || 80;
+app.listen(PORT, () => {
+    console.info('listen: ', PORT)
+});
