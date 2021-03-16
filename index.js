@@ -47,9 +47,9 @@ if (app.get('env') === 'production') {
 }
 
 // passportの定義
-app.use(session(sess))
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(session(sess));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // secretの定義
 // const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
