@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // usersのルーティング
-router.get('/users', function (req, res) {
+router.get('/', function (req, res, next) {
     res.render('users')
 });
 
