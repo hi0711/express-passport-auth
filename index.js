@@ -21,6 +21,13 @@ app.set('view engine', 'pug');
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 
+// logging
+app.use(require('morgan')('combined'));
+
+// express.json
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 // server
 const PORT = process.env.PORT_NO || 80;
 app.listen(PORT, () => {
