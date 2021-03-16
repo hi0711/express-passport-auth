@@ -12,7 +12,7 @@ function isAuthenticated (req, res, next) {
 
 // usersのルーティング
 router.get('/', isAuthenticated, function (req, res) {
-    res.render('users')
+    res.render('users', {USER: req.user})
 });
 
 module.exports = router;
