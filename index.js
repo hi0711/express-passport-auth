@@ -71,9 +71,9 @@ passport.deserializeUser(function (user, done) {
 
 // Router
 const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 
 // server
 const PORT = process.env.PORT_NO || 80;
