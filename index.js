@@ -10,27 +10,20 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
 
-// テンプレートエンジンの指定
+// logging
+app.use(require('morgan')('combined'));
+
+// express.json
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+// views engine
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-// server
-const PORT = process.env.PORT_NO || 80;
-app.listen(PORT, () => {
-    console.info('listen: ', PORT)
-});
-
-// render
-app.get('/', function (req, res) {
-    res.render('login')
-});
-
-// secretとuserの定義
-const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
-    USER = process.env.DEFAULT_USER;
 
 // sessionの設定
 var sess = {
-    secret: SECRET,
+    secret: 'wedding party',
     resave: false,
     saveUninitialized: true,
     cookie: {}
@@ -41,30 +34,49 @@ if (app.get('env') === 'production') {
 }
 
 // passportの定義
-app.use(session(sess))
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(session(sess));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// secretの定義
+const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10);
 
 // strategiesの定義
-passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    passReqToCallback: true
-}, function (req, username, password, done) {
-    process.nextTick(function () {
-        // ユーザー名、パスワードが不正な時
+passport.use(new LocalStrategy(
+    function (username, password, done) {
+        // ユーザー名が不正な時
         if (!username) {
             return done(null, false, {
                 message: 'User name is incorrect!'
             });
-        } else if (password !== result[0].password) {
+        }
+        // パスワードが不正な時
+        if (!bcrypt.compareSync(password, SECRET)) {
             return done(null, false, {
                 message: 'Password is incorrect!'
             });
-        } else {
-            console.log('username: ' + username)
-            return done(null, username)
         }
-    });
-}));
+        console.log('username: ', username, 'password: ', password);
+        return done(null, username)
+    })
+);
 
+// serialize
+passport.serializeUser(function (user, done) {
+    done(null, user)
+});
+passport.deserializeUser(function (user, done) {
+    done(null, user)
+});
+
+// Router
+const indexRouter = require('./routes/index');
+// const usersRouter = require('./routes/users');
+app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+
+// server
+const PORT = process.env.PORT_NO || 80;
+app.listen(PORT, () => {
+    console.info('listen: ', PORT)
+});
