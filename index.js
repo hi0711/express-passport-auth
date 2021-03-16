@@ -39,9 +39,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // secretの定義
-// const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10),
-//     SECRET_COMPARE = bcrypt.compareSync(password, SECRET);
-const SECRET = process.env.DEFAULT_SECRET;
+const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10);
 
 // strategiesの定義
 passport.use(new LocalStrategy(
@@ -53,7 +51,7 @@ passport.use(new LocalStrategy(
             });
         }
         // パスワードが不正な時
-        if (password !== SECRET) {
+        if (!bcrypt.compareSync(password, SECRET)) {
             return done(null, false, {
                 message: 'Password is incorrect!'
             });
