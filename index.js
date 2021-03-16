@@ -59,24 +59,20 @@ const SECRET = process.env.DEFAULT_SECRET;
 // strategiesの定義
 passport.use(new LocalStrategy(
     function (username, password, done) {
-        User.findOne({username: username}, function (err, user) {
-            if (err) {
-                return done(err)
-            }
-            // ユーザー名が不正な時
-            if (!user) {
-                return done(null, false, {
-                    message: 'User name is incorrect!'
-                });
-            }
-            // パスワードが不正な時
-            if (password !== SECRET) {
-                return done(null, false, {
-                    message: 'Password is incorrect!'
-                });
-            }
-            return done(null, user)
-        });
+        // ユーザー名が不正な時
+        if (!username) {
+            return done(null, false, {
+                message: 'User name is incorrect!'
+            });
+        }
+        // パスワードが不正な時
+        if (password !== SECRET) {
+            return done(null, false, {
+                message: 'Password is incorrect!'
+            });
+        }
+        console.log('username: ', username, 'password: ', password);
+        return done(null, username)
     })
 );
 
