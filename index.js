@@ -85,6 +85,12 @@ const usersRouter = require('./routes/users');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+// 共通 - ログアウトのルーティング
+app.get('/logout', function (req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
 // server
 const PORT = process.env.PORT_NO || 80;
 app.listen(PORT, () => {
