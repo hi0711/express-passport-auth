@@ -25,20 +25,23 @@ app.use(express.urlencoded({extended: false}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// connect-flashの定義
+app.use(flash());
+
 // sessionの設定
-var sess = {
-    secret: 'wedding party',
+const maxage = 60 * 60 * 1000 * 24 * 3; // 3days
+let sess = {
+    secret: ['wedding party', 'suggar pepper sparkle'],
     resave: false,
     saveUninitialized: true,
-    cookie: {}
+    cookie: {
+        maxAge: maxage,
+    }
 }
 if (app.get('env') === 'production') {
     app.set('trust proxy', 1)
     sess.cookie.secure = true
 }
-
-// connect-flashの定義
-app.use(flash());
 
 // passportの定義
 app.use(session(sess));
