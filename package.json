@@ -20,6 +20,7 @@
   "homepage": "https://github.com/hi0711/express-passport-auth#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "connect-flash": "^0.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "morgan": "^1.10.0",

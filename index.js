@@ -9,6 +9,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
+const flash = require('connect-flash');
 
 // logging
 app.use(require('morgan')('combined'));
@@ -33,6 +34,9 @@ if (app.get('env') === 'production') {
     sess.cookie.secure = true
 }
 
+// connect-flashの定義
+app.use(flash());
+
 // passportの定義
 app.use(session(sess));
 app.use(passport.initialize());
@@ -47,13 +51,13 @@ passport.use(new LocalStrategy(
         // ユーザー名が不正な時
         if (!username) {
             return done(null, false, {
-                message: 'User name is incorrect!'
+                message: 'ユーザー名を入力してください。'
             });
         }
         // パスワードが不正な時
         if (!bcrypt.compareSync(password, SECRET)) {
             return done(null, false, {
-                message: 'Password is incorrect!'
+                message: '正しいパスワードを入力してください。'
             });
         }
         console.log('username: ', username, 'password: ', password);
