@@ -4,6 +4,8 @@ html(lang='ja')
     meta(charset='utf-8')
     title login
   body
+    if ERROR != ''
+      p #{ERROR}
     form(action='/login' method='POST')
       input(type='text' name='username' placeholder='UserName')
       input(type='password' name='password' placeholder='password')
