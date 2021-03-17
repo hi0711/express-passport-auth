@@ -11,6 +11,9 @@ const session = require('express-session');
 const path = require('path');
 const flash = require('connect-flash');
 
+// helmet
+app.use(require('helmet')());
+
 // logging
 app.use(require('morgan')('combined'));
 
