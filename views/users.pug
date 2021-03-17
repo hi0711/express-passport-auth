@@ -5,3 +5,7 @@ html(lang='ja')
     title User
     body
       p Hello, #{USER}!!
+
+      if USER != ''
+        form(action='/logout' method='POST')
+          input(type='submit' value='logout')
