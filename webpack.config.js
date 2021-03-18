@@ -5,15 +5,14 @@ const path = require('path');
 const entries = glob.sync('./src_client/**/*.js');
 
 module.exports = {
-    mode: 'development',
+    devtool: 'source-map',
     devServer: {
         contentBase: path.join(__dirname, 'views'),
-        port: 8080,
+        port: 3000,
         host: 'localhost',
         hot: true,
     },
     entry: entries,
-    watch: true,
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/js/',
@@ -30,10 +29,6 @@ module.exports = {
                         options: {
                             presets: [
                                 '@babel/preset-env',
-                                {
-                                    'modules': 'false',
-                                    'targets': '> 2%, not dead',
-                                }
                             ]
                         }
                     }
