@@ -66,7 +66,6 @@ passport.use(new LocalStrategy(
                 message: '正しいパスワードを入力してください。'
             });
         }
-        console.log('username: ', username, 'password: ', password);
         return done(null, username)
     })
 );
