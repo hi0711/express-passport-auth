@@ -14,6 +14,26 @@ const flash = require('connect-flash');
 // helmet
 app.use(require('helmet')());
 
+// webpack
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const devServerEnabled = true;
+const config = require('../webpack.config');
+
+if (devServerEnabled) {
+    config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+    const compiler = webpack(config);
+
+    app.use(webpackDevMiddleware(compiler, {
+        publicPath: config.output.publicPath
+    }));
+
+    app.use(webpackHotMiddleware(compiler));
+}
+
 // logging
 app.use(require('morgan')('combined'));
 

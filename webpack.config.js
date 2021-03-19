@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const glob = require('glob');
 const path = require('path');
 
-const entries = glob.sync('./src_client/**/*.js');
+// const entries = glob.sync('./src_client/**/*.js');
 
 module.exports = {
     devtool: 'source-map',
@@ -10,9 +10,11 @@ module.exports = {
         contentBase: path.join(__dirname, 'views'),
         port: 3000,
         host: 'localhost',
-        hot: true,
+        // hot: true,
     },
-    entry: entries,
+    entry: {
+        app: ['./src_client/app']
+    },
     output: {
         path: path.join(__dirname, 'dist'),
         publicPath: '/js/',
