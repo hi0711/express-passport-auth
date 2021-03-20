@@ -1,3 +1,8 @@
 export default function fetchName() {
-    console.log('hoge')
+    let nameField = document.querySelector('#username');
+
+    nameField.addEventListener('blur', (event) => {
+        const regex = /\s+/;
+        console.log(nameField.value.replace(regex, ''))
+    });
 }

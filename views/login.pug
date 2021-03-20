@@ -7,8 +7,8 @@ html(lang='ja')
     if ERROR != ''
       p #{ERROR}
     form(action='/login' method='POST')
-      input(type='text' name='username' placeholder='UserName')
-      input(type='password' name='password' placeholder='password')
+      input#username(type='text' name='username' placeholder='UserName')
+      input#password(type='password' name='password' placeholder='password')
       button(type='submit' value='送信') 送信
 
     script(src="/dist/app.bundle.js")
