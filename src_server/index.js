@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // views engine
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 // connect-flashの定義
@@ -99,8 +99,8 @@ passport.deserializeUser(function (user, done) {
 });
 
 // Router
-const indexRouter = require('../routes/index');
-const usersRouter = require('../routes/users');
+const indexRouter = require(path.join(__dirname, '../routes/index'));
+const usersRouter = require(path.join(__dirname, '../routes/users'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
