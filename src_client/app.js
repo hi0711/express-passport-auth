@@ -1,3 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('hoge')
-})
+import fetchName from './fetch-name';
+
+fetchName();
+
