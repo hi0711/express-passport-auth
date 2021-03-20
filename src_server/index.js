@@ -99,8 +99,8 @@ passport.deserializeUser(function (user, done) {
 });
 
 // Router
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require('../routes/index');
+const usersRouter = require('../routes/users');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

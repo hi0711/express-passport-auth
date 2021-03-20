@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon index.js",
     "build": "NODE_ENV=production node index.js",
-    "start:client": "webpack-cli serve --mode development"
+    "start:client": "webpack-cli serve",
+    "start": "babel-watch ./src_server/index.js"
   },
   "repository": {
     "type": "git",
