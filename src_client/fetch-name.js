@@ -1,8 +1,15 @@
 export default function fetchName() {
-    let nameField = document.querySelector('#username');
+    const nameField = document.querySelector('#username');
 
-    nameField.addEventListener('blur', (event) => {
+    function returnName(target) {
         const regex = /\s+/;
-        console.log(nameField.value.replace(regex, ''))
-    });
+        let regexName = target.value.replace(regex, '');
+        return regexName;
+    }
+    function cropName() {
+        const userName = returnName(nameField);
+        console.log(userName);
+    }
+
+    nameField.addEventListener('blur', cropName, false);
 }
