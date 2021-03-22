@@ -8,7 +8,8 @@ export default function fetchName() {
     }
     function cropName() {
         const userName = returnName(nameField);
-        console.log(userName);
+        const hiddenInput = document.querySelector('.user-name');
+        hiddenInput.value = userName;
     }
 
     nameField.addEventListener('blur', cropName, false);

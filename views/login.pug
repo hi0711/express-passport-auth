@@ -9,6 +9,7 @@ html(lang='ja')
     form(action='/login' method='POST')
       input#username(type='text' name='username' placeholder='UserName')
       input#password(type='password' name='password' placeholder='password')
+      input#cropped-name(type='hidden' name='cropped-name')
       button(type='submit' value='送信') 送信
 
     script(src="/dist/app.bundle.js")
