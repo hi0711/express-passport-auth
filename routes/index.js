@@ -8,13 +8,21 @@ router.get('/', function (req, res) {
     res.render('login', {ERROR: req.flash('error')})
 });
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/users',
-    failureRedirect: '/',
-    session: true,
-    failureFlash: true,
-    badRequestMessage: '認証エラーです。正しいユーザー名、パスワードを入力してください。',
-}))
+router.post('/login',
+    function (req, res, next) {
+        console.log(req.body);
+        next();
+    },
+    passport.authenticate('local',
+        {
+            successRedirect: '/users',
+            failureRedirect: '/',
+            session: true,
+            failureFlash: true,
+            badRequestMessage: '認証エラーです。正しいユーザー名、パスワードを入力してください。',
+        }
+    )
+);
 
 module.exports = router;
 
