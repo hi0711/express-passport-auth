@@ -10,18 +10,16 @@ router.get('/', function (req, res) {
 
 router.post('/login',
     function (req, res, next) {
-        console.log(req.body);
-        next();
-    },
-    passport.authenticate('local',
-        {
-            successRedirect: '/users',
-            failureRedirect: '/',
-            session: true,
-            failureFlash: true,
-            badRequestMessage: '認証エラーです。正しいユーザー名、パスワードを入力してください。',
-        }
-    )
+        passport.authenticate('local',
+            {
+                successRedirect: '/users?name=' + req.body.cropped,
+                failureRedirect: '/',
+                session: true,
+                failureFlash: true,
+                badRequestMessage: '認証エラーです。正しいユーザー名、パスワードを入力してください。',
+            }
+        )(req, res, next);
+    }
 );
 
 module.exports = router;
