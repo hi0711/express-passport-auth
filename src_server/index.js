@@ -14,6 +14,26 @@ const flash = require('connect-flash');
 // helmet
 app.use(require('helmet')());
 
+// webpack
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const devServerEnabled = true;
+const config = require('../webpack.config');
+
+if (devServerEnabled) {
+    config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+    const compiler = webpack(config);
+
+    app.use(webpackDevMiddleware(compiler, {
+        publicPath: config.output.publicPath
+    }));
+
+    app.use(webpackHotMiddleware(compiler));
+}
+
 // logging
 app.use(require('morgan')('combined'));
 
@@ -22,7 +42,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 // views engine
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
 // connect-flashの定義
@@ -79,8 +99,8 @@ passport.deserializeUser(function (user, done) {
 });
 
 // Router
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const indexRouter = require(path.join(__dirname, '../routes/index'));
+const usersRouter = require(path.join(__dirname, '../routes/users'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
