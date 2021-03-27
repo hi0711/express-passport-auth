@@ -5,6 +5,10 @@ html(lang='ja')
     title User
     body
       p Hello, #{USER}!!
+      p
+        | あなたは
+        span.group
+        | です。
 
       if USER != ''
         form(action='/logout' method='GET')
