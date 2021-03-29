@@ -10,9 +10,13 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
 const flash = require('connect-flash');
+const fs = require('fs');
+const https = require('https');
 
 // helmet
-app.use(require('helmet')());
+if (app.get('env') === 'production') {
+    app.use(require('helmet')());
+}
 
 // webpack
 const webpack = require('webpack');
@@ -111,7 +115,20 @@ app.get('/logout', function (req, res) {
 });
 
 // server
+const httpsOptions = {
+    key: fs.readFileSync('keys/private.key'),
+    cert: fs.readFileSync('keys/certificate.pem')
+}
+
 const PORT = process.env.PORT_NO || 80;
-app.listen(PORT, () => {
-    console.info('listen: ', PORT)
-});
+
+if (app.get('env') === 'development') {
+    const server = https.createServer(httpsOptions, app)
+        .listen(PORT, () => {
+            console.info('listen: ', PORT)
+        });
+} else {
+    app.listen(PORT, () => {
+        console.info('listen: ', PORT)
+    });
+}
