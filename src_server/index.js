@@ -45,6 +45,12 @@ app.use(require('morgan')('combined'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+// cors
+const corsOptions = {
+    origin: "https://localhost"
+}
+app.use(require('cors')(corsOptions));
+
 // views engine
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
