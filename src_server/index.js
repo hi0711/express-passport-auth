@@ -45,11 +45,18 @@ app.use(require('morgan')('combined'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+// port
+const PORT = process.env.PORT_NO ?? 80;
+
 // cors
-const corsOptions = {
-    origin: "https://localhost"
-}
-app.use(require('cors')(corsOptions));
+const cors = require('cors');
+const PROTOCOL = process.env.PROTOCOL ?? 'https://';
+const DOMAIN = PROTOCOL + process.env.HOST;
+app.use(cors({
+    origin: DOMAIN + ':' + PORT,
+    credentials: true,
+    optionSuccessStatus: 200
+}));
 
 // views engine
 app.set('views', path.join(__dirname, '../views'));
@@ -125,8 +132,6 @@ const httpsOptions = {
     key: fs.readFileSync('keys/private.key'),
     cert: fs.readFileSync('keys/certificate.pem')
 }
-
-const PORT = process.env.PORT_NO || 80;
 
 if (app.get('env') === 'development') {
     const server = https.createServer(httpsOptions, app)
