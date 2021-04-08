@@ -9,9 +9,7 @@ export default function fetchGroup() {
     const apiURL = 'https://script.google.com/a/hi0711.xyz/macros/s/AKfycbze5J3J7RCrD-T8meouPAKmjQn0DbOKgOG_rOyQ/exec?q=' + params.get('name');
 
     function returnData() {
-        return fetch(apiURL, {
-            mode: 'no-cors'
-        })
+        return fetch(apiURL)
             .then((response) => response.json())
             .then((data) => {
                 const userData = [];
@@ -23,6 +21,6 @@ export default function fetchGroup() {
     }
 
     const outputData = returnData();
-    targetElement.innerHTML = outputData;
+    console.log(outputData)
 }
 
