@@ -10,9 +10,13 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const path = require('path');
 const flash = require('connect-flash');
+const fs = require('fs');
+const https = require('https');
 
 // helmet
-app.use(require('helmet')());
+if (app.get('env') === 'production') {
+    app.use(require('helmet')());
+}
 
 // webpack
 const webpack = require('webpack');
@@ -40,6 +44,19 @@ app.use(require('morgan')('combined'));
 // express.json
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
+// port
+const PORT = process.env.PORT_NO ?? 80;
+
+// cors
+const cors = require('cors');
+const PROTOCOL = process.env.PROTOCOL ?? 'https://';
+const DOMAIN = PROTOCOL + process.env.HOST;
+app.use(cors({
+    origin: DOMAIN + ':' + PORT,
+    credentials: true,
+    optionSuccessStatus: 200
+}));
 
 // views engine
 app.set('views', path.join(__dirname, '../views'));
@@ -111,7 +128,18 @@ app.get('/logout', function (req, res) {
 });
 
 // server
-const PORT = process.env.PORT_NO || 80;
-app.listen(PORT, () => {
-    console.info('listen: ', PORT)
-});
+const httpsOptions = {
+    key: fs.readFileSync('keys/private.key'),
+    cert: fs.readFileSync('keys/certificate.pem')
+}
+
+if (app.get('env') === 'development') {
+    const server = https.createServer(httpsOptions, app)
+        .listen(PORT, () => {
+            console.info('listen: ', PORT)
+        });
+} else {
+    app.listen(PORT, () => {
+        console.info('listen: ', PORT)
+    });
+}

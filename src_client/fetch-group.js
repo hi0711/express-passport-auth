@@ -4,23 +4,24 @@ export default function fetchGroup() {
     // URLSearchParamsオブジェクト取得
     const params = url.searchParams;
     // ターゲットになる要素
-    const targetElement = document.querySelector('group');
+    const targetElement = document.querySelector('.group');
     // API問い合わせ先URL
-    const apiURL = 'https://script.google.com/macros/s/AKfycbx8F3rUeX9PEEAQSy-U_m8ICNeeEzdESweGP4lRTGWILOLx0j3GD6r3TbmjTVqEX7CB/exec?q=' + params.get('name');
+    const apiURL = 'https://script.google.com/a/hi0711.xyz/macros/s/AKfycbze5J3J7RCrD-T8meouPAKmjQn0DbOKgOG_rOyQ/exec?q=' + params.get('name');
 
     function returnData() {
+        let userData = '';
         return fetch(apiURL)
             .then((response) => response.json())
             .then((data) => {
-                const userData = [];
                 for (let i in data) {
-                    userData.push(data[i].group)
+                    userData = data[i].group
                 }
-                return userData
-            });
+            })
+            .then(() => {
+                targetElement.innerHTML = userData
+            })
     }
 
-    const outputData = returnData();
-    targetElement.innerHTML = outputData;
+    returnData();
 }
 

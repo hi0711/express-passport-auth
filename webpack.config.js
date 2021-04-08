@@ -43,4 +43,8 @@ module.exports = {
         modules: ['./', 'node_modules'],
     },
     plugins: [],
+    watchOptions: {
+        poll: 1000,
+        ignored: ['node_modules'],
+    },
 };
