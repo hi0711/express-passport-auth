@@ -9,7 +9,9 @@ export default function fetchGroup() {
     const apiURL = 'https://script.google.com/macros/s/AKfycbx8F3rUeX9PEEAQSy-U_m8ICNeeEzdESweGP4lRTGWILOLx0j3GD6r3TbmjTVqEX7CB/exec?q=' + params.get('name');
 
     function returnData() {
-        return fetch(apiURL)
+        return fetch(apiURL, {
+            mode: 'no-cors'
+        })
             .then((response) => response.json())
             .then((data) => {
                 const userData = [];
