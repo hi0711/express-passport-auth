@@ -6,7 +6,7 @@ export default function fetchGroup() {
     // ターゲットになる要素
     const targetElement = document.querySelector('group');
     // API問い合わせ先URL
-    const apiURL = 'https://script.google.com/macros/s/AKfycbx8F3rUeX9PEEAQSy-U_m8ICNeeEzdESweGP4lRTGWILOLx0j3GD6r3TbmjTVqEX7CB/exec?q=' + params.get('name');
+    const apiURL = 'https://script.google.com/a/hi0711.xyz/macros/s/AKfycbze5J3J7RCrD-T8meouPAKmjQn0DbOKgOG_rOyQ/exec?q=' + params.get('name');
 
     function returnData() {
         return fetch(apiURL, {
