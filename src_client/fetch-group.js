@@ -8,20 +8,22 @@ export default function fetchGroup() {
     // API問い合わせ先URL
     const apiURL = 'https://script.google.com/a/hi0711.xyz/macros/s/AKfycbze5J3J7RCrD-T8meouPAKmjQn0DbOKgOG_rOyQ/exec?q=' + params.get('name');
 
-    function returnData() {
-        let userData = '';
-        return fetch(apiURL)
-            .then((response) => response.json())
-            .then((data) => {
-                for (let i in data) {
-                    userData = data[i].group
-                }
-            })
-            .then(() => {
-                targetElement.innerHTML = userData
-            })
-    }
+    if (targetElement) {
+        function returnData() {
+            let userData = '';
+            return fetch(apiURL)
+                .then((response) => response.json())
+                .then((data) => {
+                    for (let i in data) {
+                        userData = data[i].group
+                    }
+                })
+                .then(() => {
+                    targetElement.innerHTML = userData
+                })
+        }
 
-    returnData();
+        returnData();
+    }
 }
 

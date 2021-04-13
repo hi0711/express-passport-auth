@@ -90,7 +90,7 @@ const SECRET = bcrypt.hashSync(process.env.DEFAULT_SECRET, 10);
 
 // strategiesの定義
 passport.use(new LocalStrategy(
-    function (username, password, done) {
+    (username, password, done) => {
         // ユーザー名が不正な時
         if (!username) {
             return done(null, false, {
@@ -108,10 +108,10 @@ passport.use(new LocalStrategy(
 );
 
 // serialize
-passport.serializeUser(function (user, done) {
+passport.serializeUser((user, done) => {
     done(null, user)
 });
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser((user, done) => {
     done(null, user)
 });
 
@@ -122,7 +122,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // 共通 - ログアウトのルーティング
-app.get('/logout', function (req, res) {
+app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/');
 });
