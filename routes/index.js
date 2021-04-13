@@ -4,12 +4,12 @@ const passport = require('passport');
 const flash = require('connect-flash');
 
 // indexのルーティング
-router.get('/', function (req, res) {
+router.get('/', (req, res) => {
     res.render('login', {ERROR: req.flash('error')})
 });
 
 router.post('/login',
-    function (req, res, next) {
+    (req, res, next) => {
         passport.authenticate('local',
             {
                 successRedirect: '/users?name=' + req.body.cropped,
