@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "build": "NODE_ENV=production node index.js",
+    "build": "NODE_ENV=production node ./src_server/index.js",
     "start:client": "webpack-cli serve",
     "start": "babel-watch ./src_server/index.js"
   },
