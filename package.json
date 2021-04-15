@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "NODE_ENV=production node ./src_server/index.js",
+    "build": "npm run webpack:build && NODE_ENV=production node ./src_server/index.js",
     "start:client": "webpack-cli serve",
-    "start": "babel-watch ./src_server/index.js"
+    "start": "babel-watch ./src_server/index.js",
+    "webpack:build": "webpack --config ./webpack.config.prod.js"
   },
   "repository": {
     "type": "git",
