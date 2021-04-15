@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "build": "NODE_ENV=production node index.js",
+    "build": "npm run webpack:build && NODE_ENV=production node ./src_server/index.js",
     "start:client": "webpack-cli serve",
-    "start": "babel-watch ./src_server/index.js"
+    "start": "babel-watch ./src_server/index.js",
+    "webpack:build": "webpack --config ./webpack.config.prod.js"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,8 @@
     "webpack-cli": "^4.5.0",
     "webpack-dev-middleware": "^4.1.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-hot-middleware": "^2.25.0"
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-merge": "^5.7.3"
   },
   "browserslist": [
     ">2%"

@@ -19,23 +19,25 @@ if (app.get('env') === 'production') {
 }
 
 // webpack
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const devServerEnabled = true;
-const config = require('../webpack.config');
+if (app.get('env') === 'development') {
+    const webpack = require('webpack');
+    const webpackDevMiddleware = require('webpack-dev-middleware');
+    const webpackHotMiddleware = require('webpack-hot-middleware');
+    const devServerEnabled = true;
+    const config = require('../webpack.config.dev.js');
 
-if (devServerEnabled) {
-    config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
-    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (devServerEnabled) {
+        config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
+        config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-    const compiler = webpack(config);
+        const compiler = webpack(config);
 
-    app.use(webpackDevMiddleware(compiler, {
-        publicPath: config.output.publicPath
-    }));
+        app.use(webpackDevMiddleware(compiler, {
+            publicPath: config.output.publicPath
+        }));
 
-    app.use(webpackHotMiddleware(compiler));
+        app.use(webpackHotMiddleware(compiler));
+    }
 }
 
 // logging
@@ -61,6 +63,10 @@ app.use(cors({
 // views engine
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
+
+// static
+const jsAssetPath = path.join(__dirname, '../views/dist/js');
+app.use('/dist/js', express.static(jsAssetPath));
 
 // connect-flashの定義
 app.use(flash());
