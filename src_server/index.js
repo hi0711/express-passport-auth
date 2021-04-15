@@ -24,7 +24,7 @@ if (app.get('env') === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
     const devServerEnabled = true;
-    const config = require('../webpack.config');
+    const config = require('../webpack.config.dev.js');
 
     if (devServerEnabled) {
         config.entry.app.unshift('webpack-hot-middleware/client?reload=true&timeout=1000');
