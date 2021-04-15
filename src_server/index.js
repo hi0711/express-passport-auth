@@ -64,6 +64,10 @@ app.use(cors({
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'pug');
 
+// static
+const jsAssetPath = path.join(__dirname, '../views/dist/js');
+app.use('/dist/js', express.static(jsAssetPath));
+
 // connect-flashの定義
 app.use(flash());
 

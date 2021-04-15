@@ -6,8 +6,8 @@ module.exports = {
         app: ['./src_client/app']
     },
     output: {
-        path: path.join(__dirname, 'dist'),
-        publicPath: 'dist',
+        path: path.join(__dirname, './views/dist/js'),
+        publicPath: '/dist/js',
         filename: 'app.bundle.js',
     },
     module: {
